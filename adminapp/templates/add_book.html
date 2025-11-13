@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white text-center">
+        <h4 class="mb-0">Add Book</h4>
+      </div>
+
+      <div class="card-body">
+        <form method="post" action="{%url 'savebook' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <!-- Title -->
+          <div class="mb-3">
+            <label class="form-label">Book Title</label>
+            <input type="text" class="form-control" placeholder="Enter book title" name="b_title">
+          </div>
+
+          <!-- Author -->
+          <div class="mb-3">
+            <label class="form-label">Author</label>
+            <input type="text" class="form-control" placeholder="Enter author name" name="b_author">
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select class="form-control" name="b_category">
+              <option selected disabled>Select category</option>
+              {% for i in categorys %}
+              <option>{{i.Category_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" placeholder="Enter book price" name="b_price">
+          </div>
+
+          <!-- Publisher -->
+          <div class="mb-3">
+            <label class="form-label">Publisher</label>
+            <input type="text" class="form-control" placeholder="Enter publisher name" name="b_pub">
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" placeholder="Enter book description" name="b_desc"></textarea>
+          </div>
+
+          <!-- Book Image -->
+          <div class="mb-3">
+            <label class="form-label">Book Image</label>
+            <input type="file" class="form-control" name="b_img">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success">Add Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

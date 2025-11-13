@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h3 class="text-center text-primary mb-4">View Categories</h3>
+
+    <!-- Row for category cards -->
+    <div class="row g-4">
+        {% for c in category %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ c.Category_image.url }}" class="card-img-top" alt="Category Image"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ c.Category_name }}</h5>
+                    <p class="card-text text-muted">{{ c.Category_description }}</p>
+                    <a href="{%url 'editcategory' e_id=c.id %}" class="btn btn-primary" >Edit</a>
+                    <a href="{%url 'delete_category' cat_id=c.id %}" class="btn btn-danger">Delete</a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
