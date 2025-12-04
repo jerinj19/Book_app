@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
-from adminapp.models import Book_category,Book
+from adminapp.models import Book_category, Book
 from webapp.models import Contactdb
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -55,44 +55,41 @@ def updatecategory(request, B_id):
         )
         return redirect(viewcategory)
 
-def delete_category(request,cat_id):
-    data=Book_category.objects.filter(id=cat_id)
+
+def delete_category(request, cat_id):
+    data = Book_category.objects.filter(id=cat_id)
     data.delete()
     return redirect(viewcategory)
 
 
 def addbook(request):
-    categorys=Book_category.objects.all()
-    return render(request, "add_book.html",{'categorys':categorys})
-
-
-
+    categorys = Book_category.objects.all()
+    return render(request, "add_book.html", {'categorys': categorys})
 
 
 def savebook(request):
     if request.method == "POST":
         tittle = request.POST.get('b_title')
-        author=request.POST.get('b_author')
-        category=request.POST.get('b_category')
-        price=request.POST.get('b_price')
-        publisher=request.POST.get('b_pub')
-        description=request.POST.get('b_desc')
-        book_image=request.FILES['b_img']
-        obj=Book(Book_image=book_image,
-                 Book_Description=description,
-                 Book_Publisher=publisher,
-                 Book_Price=price,
-                 Category=category,
-                 Book_author=author,
-                 Book_Tittle=tittle)
+        author = request.POST.get('b_author')
+        category = request.POST.get('b_category')
+        price = request.POST.get('b_price')
+        publisher = request.POST.get('b_pub')
+        description = request.POST.get('b_desc')
+        book_image = request.FILES['b_img']
+        obj = Book(Book_image=book_image,
+                   Book_Description=description,
+                   Book_Publisher=publisher,
+                   Book_Price=price,
+                   Category=category,
+                   Book_author=author,
+                   Book_Tittle=tittle)
         obj.save()
         return redirect(addbook)
+
+
 def displaybook(request):
-    book_data=Book.objects.all()
-    return render(request,"view_book.html",{'book_data':book_data})
-
-
-
+    book_data = Book.objects.all()
+    return render(request, "view_book.html", {'book_data': book_data})
 
 
 def admin_login_page(request):
@@ -115,11 +112,14 @@ def admin_login(request):
                 return redirect(admin_login_page)
         else:
             return redirect(admin_login_page)
+
+
 def admin_logout(request):
     del request.session['username']
     del request.session['password']
     return redirect(admin_login_page)
 
+
 def viewcontactmessage(request):
-    data=Contactdb.objects.all()
-    return render(request,"viewcontact.html",{'data':data})
+    data = Contactdb.objects.all()
+    return render(request, "viewcontact.html", {'data': data})

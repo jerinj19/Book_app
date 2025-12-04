@@ -62,37 +62,37 @@ function Pass() {
     let p3 = document.form_signup.U_pwd.value;
     let p4 = document.form_signup.C_pwd.value;
 
-    // Name check
+
     if (p1 === "") {
         alert("Name cannot be empty");
         return false;
     }
 
-    // Email check
+
     if (p2 === "") {
         alert("Email cannot be empty");
         return false;
     }
 
-    // Password empty
+
     if (p3 === "") {
         alert("Password cannot be empty");
         return false;
     }
 
-    // Confirm password empty
+
     if (p4 === "") {
         alert("Confirm password cannot be empty");
         return false;
     }
 
-    // Password length check
+
     if (p3.length < 6) {
         alert("Password must contain at least 6 characters");
         return false;
     }
 
-    // Password match check
+
     if (p3 !== p4) {
         alert("Passwords do not match");
         return false;

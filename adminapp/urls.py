@@ -19,7 +19,7 @@ urlpatterns = [
     path('savebook/',views.savebook,name="savebook"),
     path('displaybook/',views.displaybook,name="displaybook"),
     # login
-    path('login/', views.admin_login, name="admin_login"),
+    path('login1/', views.admin_login, name="admin_login"),
 
     # webapp
     path('viewcontact/',views.viewcontactmessage,name="viewcontact")
