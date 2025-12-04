@@ -8,8 +8,9 @@ import webapp.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('adminapp/',include(adminapp.urls)),
-    path('webapp/',include(webapp.urls))
+    path('', include(webapp.urls)),  # <- root points to webapp
+    path('adminapp/', include(adminapp.urls)),
+    path('webapp/', include(webapp.urls)),  # optional, if you still want /webapp/ prefix
 ]
 urlpatterns+=staticfiles_urlpatterns()
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
