@@ -10,11 +10,13 @@ def homepage(request):
 
 
 def contactpage(request):
-    return render(request, 'contact.html')
+    contact= Book_category.objects.all()
+    return render(request, 'contact.html',{'contact':contact})
 
 
 def aboutpage(request):
-    return render(request, 'about.html')
+    data=Book_category.objects.all()
+    return render(request, 'about.html',{'data':data})
 
 
 def popularbooks(request):
@@ -90,6 +92,12 @@ def saveContact(request):
         city = request.POST.get('C_city')
         type = request.POST.get('C_type')
         message = request.POST.get('C_message')
-        obj=Contactdb(Contact_message=message,Contact_name=name,Contact_email=email,Contact_phone=mob,Contact_city=city,Enquiry_type=type)
+        obj=Contactdb(Contact_message=message,
+                      Contact_name=name,
+                      Contact_email=email,
+                      Contact_phone=mob,
+                      Contact_city=city,
+                      Enquiry_type=type)
         obj.save()
-        return render(request,"contact.html")
+    return redirect(contactpage)
+

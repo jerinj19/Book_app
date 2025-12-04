@@ -163,9 +163,9 @@
 
                                     <form>
                                         <label for="quantity">Quantity:</label>
-                                        <input type="number" id="quantity" name="quantity" required><br>
+                                        <input type="number" min="1" id="quantity" name="quantity" required><br>
                                         <label for="price">Price:</label>
-                                        <input type="number" id="price" name="price" step="0.01" value="{{single.Book_Price}}" required><br>
+                                        <input type="hidden" id="price" name="price" step="0.01" value="{{single.Book_Price}}" required><br>
                                         <label for="total_price">Total Price (Read-only):</label>
                                         <input type="text" id="total_price" name="total_price" readonly><br>
 
@@ -347,7 +347,17 @@
         </div>
     </div>
 </div>
-
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+     <script>
+        $(document).ready(function(){
+            $("#quantity").change(function(){
+                quantity=document.getElementById("quantity").value;
+                price=document.getElementById("price").value;
+                result=quantity*price;
+                document.getElementById("total_price").value=result;
+            })
+        })
+     </script>
 <script src="{% static 'home/js/jquery-1.11.0.min.js'%}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
