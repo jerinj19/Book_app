@@ -132,8 +132,6 @@
     </header>
 
 </div><!--header-wrap-->
-
-
 <section id="best-selling" class="leaf-pattern-overlay">
     <div class="corner-pattern-overlay"></div>
     <div class="container">
@@ -160,24 +158,27 @@
                                 <div class="item-price">
                                     <p>{{single.Book_Price}}</p>
                                 </div>
-
-                                    <form>
+                                   {%if request.session.Email%}
+                                    <form method="post" action="{%url 'save_cart' %}">
+                                        {% csrf_token %}
                                         <label for="quantity">Quantity:</label>
-                                        <input type="number" min="1" id="quantity" name="quantity" required><br>
-                                        <label for="price">Price:</label>
+                                        <input type="number"  min="1" id="quantity" name="quantity" required><br>
                                         <input type="hidden" id="price" name="price" step="0.01" value="{{single.Book_Price}}" required><br>
-                                        <label for="total_price">Total Price (Read-only):</label>
+                                        <label for="total_price">Total Price:</label>
                                         <input type="text" id="total_price" name="total_price" readonly><br>
 
                                         <input type="hidden" id="username" name="username"  value="{{request.session.Email}}" required><br>
 
-                                        <input type="hidden" name="username"  value="{{single.Book_Tittle}}" required><br>
+
+                                        <input type="hidden" name="book_name"  value="{{single.Book_Tittle}}" required><br>
                                         <div class="btn-wrap">
-                                            <a href="#" class="btn-accent-arrow">shop it now <i
-                                                    class="icon icon-ns-arrow-right"></i></a>
+                                            <button class="btn-accent-arrow"> <i>Add to Cart</i></button>
                                         </div>
                                     </form>
+                                    {%else %}
+                                      <a href="{% url 'userlogin' %}"> Please Login to shop</a>
 
+                                   {% endif %}
 
 
                             </div>

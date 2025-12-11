@@ -1250,6 +1250,17 @@
 <!-- Custom js for this page-->
 <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 <script src="{% static 'dashboard/js/Chart.roundedBarCharts.js' %}"></script>
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  {% if messages %}
+        {%for i in messages %}
+            {%if i.tags == 'success' %}
+                <script>
+                    swal('{{i}}','', 'success' )
+                </script>
+            {% endif %}
+        {% endfor %}
+  {%endif%}
+
 
 <!-- End custom js for this page-->
 </body>

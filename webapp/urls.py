@@ -1,3 +1,5 @@
+from tkinter.font import names
+
 from django.urls import path
 from . import views
 
@@ -14,4 +16,6 @@ urlpatterns = [
     path('userlogin/', views.userlogin, name='userlogin'),
     path('userlogout/', views.userlogout, name='logout'),
     path('savecontact/', views.saveContact, name='contact'),
+    path('savecart',views.savecart,name="save_cart"),
+    path('viewcart/',views.viewcart,name="view")
 ]

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Your Cart</h2>
+
+    <!-- Cart Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in item %}
+                <tr>
+                    <td>
+                        <img src="{{ i.Book_image.url }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;" />
+                    </td>
+                    <td>{{ i.Book_name }}</td>
+                    <td>₹{{ i.price }}</td>
+                    <td>
+                        <form method="POST" action="/update_cart/{{ item.id }}/">
+                            {% csrf_token %}
+                            <input  name="quantity" value="{{ i.qty }}" min="1" class="form-control w-50 d-inline" readonly />
+                            <button class="btn btn-primary btn-sm">Update</button>
+                        </form>
+                    </td>
+                    <td>₹{{ i.total_price }}</td>
+                    <td>
+                        <a href="/remove_cart/{{ item.id }}/" class="btn btn-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4">Your cart is empty.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="card p-4 mt-4 shadow-sm">
+        <h4>Cart Summary</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <strong>Total Items:</strong> <span>{{ i.qty }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+            <strong>Total Price:</strong> <span>₹{{ i.total_price }}</span>
+        </div>
+        <div class="text-end mt-3">
+            <a href="/checkout/" class="btn btn-success btn-lg">Proceed to Checkout</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

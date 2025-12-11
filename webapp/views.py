@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from adminapp.models import Book_category, Book
-from webapp.models import RegisterDb,Contactdb
-
+from webapp.models import RegisterDb,Contactdb,Cart
+from django.contrib import messages
 
 def homepage(request):
     category = Book_category.objects.all()
@@ -57,6 +57,7 @@ def saveuser(request):
                          Password=passworrd,
                          Confirm_password=confirm_password)
         if RegisterDb.objects.filter(Name=name).exists():
+            messages.warning(request,"User Already exists")
             return redirect(signup)
         elif RegisterDb.objects.filter(Email=email, ).exists():
             return redirect(signup)
@@ -100,4 +101,18 @@ def saveContact(request):
                       Enquiry_type=type)
         obj.save()
     return redirect(contactpage)
-
+def savecart(request):
+    if request.method=="POST":
+        email=request.POST.get('username')
+        quantity=int(request.POST.get('quantity'))
+        b_price=int(request.POST.get('price'))
+        t_price=int(request.POST.get('total_price'))
+        b_tittle=request.POST.get('book_name')
+        book=Book.objects.filter(Book_Tittle=b_tittle).first()
+        img=book.Book_image if book else None
+        obj=Cart(username=email,Book_name=b_tittle,qty=quantity,price=b_price,total_price=t_price,Book_image=img)
+        obj.save()
+        return redirect(homepage)
+def viewcart(request):
+    item=Cart.objects.all()
+    return render(request,"cart.html",{'item':item})

@@ -4,6 +4,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from adminapp.models import Book_category, Book
 from webapp.models import Contactdb
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 
 
@@ -24,6 +25,7 @@ def savecategory(request):
                             Category_description=description,
                             Category_image=image)
         obj.save()
+        messages.success(request,"Category saved successfully...!")
         return redirect(addcategory)
 
 
@@ -53,12 +55,14 @@ def updatecategory(request, B_id):
             Category_description=description,
             Category_image=file
         )
+        messages.info(request,"Updated Successfully..!")
         return redirect(viewcategory)
 
 
 def delete_category(request, cat_id):
     data = Book_category.objects.filter(id=cat_id)
     data.delete()
+    messages.warning(request,"Category deleted ")
     return redirect(viewcategory)
 
 
@@ -102,15 +106,20 @@ def admin_login(request):
         pw = request.POST.get('password')
         if User.objects.filter(username__contains=un).exists():
             data = authenticate(username=un, password=pw)
-
             if data is not None:
                 login(request, data)
                 request.session['username'] = un
                 request.session['password'] = pw
-                return redirect(index)
+                messages.success(request,"Login successfully")
+
+                return render(request,"index.html")
+
+
             else:
+                messages.info(request,"Username or Password is wrong ")
                 return redirect(admin_login_page)
         else:
+            messages.error(request,"User does not exist")
             return redirect(admin_login_page)
 
 
